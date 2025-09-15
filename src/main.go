@@ -7,5 +7,5 @@ import (
 func main() {
 	p1 := character.Character{}
 	p1.InitCharacter()
-	menu1.MainMenu()
+	p1.StartMenu()
 }
