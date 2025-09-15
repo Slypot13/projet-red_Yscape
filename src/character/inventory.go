@@ -5,7 +5,7 @@ import (
 	"yscape-game/src/items"
 )
 
-// Affiche l'inventaire
+// --------------------------------- Affiche l'inventaire---------------------------------
 func (p Character) AccessInventory() {
 	fmt.Println("=== Inventaire du personnage ===")
 	if len(p.Inventaire) == 0 {
@@ -17,7 +17,7 @@ func (p Character) AccessInventory() {
 	}
 }
 
-// Ajoute un item
+// ---------------------------------Ajoute un item---------------------------------
 func (p *Character) AddInventory(nom string, quantite int) {
 	for i := range p.Inventaire {
 		if p.Inventaire[i].Nom == nom {
@@ -28,7 +28,7 @@ func (p *Character) AddInventory(nom string, quantite int) {
 	p.Inventaire = append(p.Inventaire, items.Item{Nom: nom, Quantite: quantite})
 }
 
-// Retire un item
+// ---------------------------------Retire un item---------------------------------
 func (p *Character) RemoveInventory(nom string, quantite int) bool {
 	for i := range p.Inventaire {
 		if p.Inventaire[i].Nom == nom {
@@ -45,11 +45,12 @@ func (p *Character) RemoveInventory(nom string, quantite int) bool {
 	return false
 }
 
-// Vérifie si le personnage est mort
+// ---------------------------------Vérifie si le personnage est mort---------------------------------
 func (p Character) IsDead() bool {
 	return p.Pv <= 0
 }
 
+// ---------------------------------POISON---------------------------------
 func (p *Character) UsePoisonPotion() {
 	for i := range p.Inventaire {
 		if p.Inventaire[i].Nom == "Potion de poison" && p.Inventaire[i].Quantite > 0 {

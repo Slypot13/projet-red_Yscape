@@ -6,6 +6,7 @@ import (
 	"yscape-game/src/items"
 )
 
+// ---------------------------------Joueur---------------------------------
 type Character struct {
 	Nom        string
 	Classe     string
@@ -15,6 +16,7 @@ type Character struct {
 	Inventaire []items.Item
 }
 
+// ---------------------------------Initalisation joueur---------------------------------
 func (p *Character) InitCharacter() {
 	*p = Character{
 		Nom:    "cyril",
@@ -29,6 +31,7 @@ func (p *Character) InitCharacter() {
 	}
 }
 
+// ---------------------------------Informations personnages---------------------------------
 func (p Character) DisplayInfo() {
 	fmt.Println("=== Information du personnage ===")
 	fmt.Printf("\t - Nom : %s\n", p.Nom)
@@ -38,6 +41,7 @@ func (p Character) DisplayInfo() {
 	fmt.Printf("\t - PvMax : %d\n", p.PvMax)
 }
 
+// ---------------------------------Effet poison---------------------------------
 func (p *Character) PoisonPot() {
 	fmt.Println("Potion de poison utilisée !")
 
@@ -48,6 +52,7 @@ func (p *Character) PoisonPot() {
 			p.Pv = 0
 		}
 		fmt.Printf("⚠️  Poison - Dégâts %d/3 : %d PV / %d PV Max\n", i, p.Pv, p.PvMax)
+		//---------------------------------Verifie sir le joueur est mort---------------------------------
 		if p.IsDead() {
 			fmt.Println("💀 Vous êtes mort à cause du poison !")
 			return

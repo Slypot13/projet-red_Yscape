@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// ---------------------------------Affiche le menu inventaire---------------------------------
 func (p *Character) MenuInventory() {
 	for {
 		p.AccessInventory()
