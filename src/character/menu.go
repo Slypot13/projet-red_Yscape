@@ -4,33 +4,27 @@ import (
 	"fmt"
 )
 
-func (p *Character) StartMenu() {
+func (p *Character) MenuInventory() {
 	for {
-		fmt.Println("=== Menu principal ===")
-		fmt.Printf("\t1 - Afficher les informations du personnage\n")
-		fmt.Printf("\t2 - Accéder au contenu de l’inventaire\n")
-		fmt.Printf("\t0 - Quitter\n")
-		fmt.Println("Sélectionner un choix (1,2 ou 0) :")
-		var userChose int
-		fmt.Scan(&userChose)
+		p.AccessInventory()
+		fmt.Println("=== Menu inventaire ===")
+		fmt.Println("\t1 - Utiliser une potion de vie")
+		fmt.Println("\t2 - Utiliser une potion de poison")
+		fmt.Println("\t0 - Retour")
+		fmt.Print("Choix : ")
 
-		switch userChose {
+		var choix int
+		fmt.Scan(&choix)
+
+		switch choix {
 		case 1:
-			p.DisplayInfo()
+			p.TakePotion()
 		case 2:
-			//p.MenuInventory()
-		case 3:
-			p.MerchantMenu()
+			p.UsePoisonPotion()
 		case 0:
-			fmt.Println("À bientôt !")
 			return
 		default:
 			fmt.Println("Choix invalide.")
-		}
-
-		if p.IsDead() {
-			fmt.Println("💀 Vous êtes mort ! Fin du jeu.")
-			return
 		}
 	}
 }

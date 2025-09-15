@@ -49,3 +49,17 @@ func (p *Character) RemoveInventory(nom string, quantite int) bool {
 func (p Character) IsDead() bool {
 	return p.Pv <= 0
 }
+
+func (p *Character) UsePoisonPotion() {
+	for i := range p.Inventaire {
+		if p.Inventaire[i].Nom == "Potion de poison" && p.Inventaire[i].Quantite > 0 {
+			p.Inventaire[i].Quantite--
+			if p.Inventaire[i].Quantite == 0 {
+				p.Inventaire = append(p.Inventaire[:i], p.Inventaire[i+1:]...)
+			}
+			p.PoisonPot()
+			return
+		}
+	}
+	fmt.Println("⚠️  Vous n'avez pas de potion de poison.")
+}
