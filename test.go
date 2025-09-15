@@ -23,6 +23,18 @@ type Character struct {
 	Inventaire []Item
 }
 
+// Affiche le texte en mode machine à écrire, en gras cyan
+func typewriterPrint(text string, delay time.Duration) {
+	startStyle := "\033[1;36m" // gras + cyan
+	resetStyle := "\033[0m"
+	fmt.Print(startStyle)
+	for _, c := range text {
+		fmt.Printf("%c", c)
+		time.Sleep(delay)
+	}
+	fmt.Println(resetStyle)
+}
+
 // Initialise le personnage
 func (p *Character) InitCharacter() {
 	*p = Character{
@@ -145,14 +157,27 @@ func (p *Character) TakePotion() {
 	fmt.Println("⚠️  Vous n'avez pas de potion de vie.")
 }
 
-// Menu inventaire
+// Menu inventaire avec couleur
 func (p *Character) MenuInventory() {
+	const (
+		yellowBold = "\033[1;33m"
+		green      = "\033[32m"
+		reset      = "\033[0m"
+	)
+
 	for {
 		p.AccessInventory()
+		fmt.Println()
+		fmt.Print(yellowBold)
 		fmt.Println("=== Menu inventaire ===")
+		fmt.Print(reset)
+
+		fmt.Print(green)
 		fmt.Println("\t1 - Utiliser une potion de vie")
 		fmt.Println("\t2 - Utiliser une potion de poison")
 		fmt.Println("\t0 - Retour")
+		fmt.Print(reset)
+
 		fmt.Print("Choix : ")
 
 		var choix int
@@ -171,13 +196,26 @@ func (p *Character) MenuInventory() {
 	}
 }
 
-// Menu marchand
+// Menu marchand avec couleur
 func (p *Character) MerchantMenu() {
+	const (
+		yellowBold = "\033[1;33m"
+		green      = "\033[32m"
+		reset      = "\033[0m"
+	)
+
 	for {
+		fmt.Println()
+		fmt.Print(yellowBold)
 		fmt.Println("=== Marchand ===")
+		fmt.Print(reset)
+
+		fmt.Print(green)
 		fmt.Println("\t1 - Potion de vie (gratuit)")
 		fmt.Println("\t2 - Potion de poison (gratuit)")
 		fmt.Println("\t0 - Quitter")
+		fmt.Print(reset)
+
 		fmt.Print("Choix : ")
 
 		var choix int
@@ -198,14 +236,26 @@ func (p *Character) MerchantMenu() {
 	}
 }
 
-// Menu principal du jeu
+// Menu principal du jeu avec titre jaune gras et choix verts
 func (p *Character) StartMenu() {
+	const (
+		yellowBold = "\033[1;33m"
+		green      = "\033[32m"
+		reset      = "\033[0m"
+	)
 	for {
-		fmt.Println("\n=== Menu Principal ===")
+		fmt.Println()
+		fmt.Print(yellowBold)
+		fmt.Println("=== Menu Principal ===")
+		fmt.Print(reset)
+
+		fmt.Print(green)
 		fmt.Println("\t1 - Afficher infos personnage")
 		fmt.Println("\t2 - Inventaire")
 		fmt.Println("\t3 - Marchand")
 		fmt.Println("\t0 - Quitter")
+		fmt.Print(reset)
+
 		fmt.Print("Choix : ")
 
 		var choix int
@@ -230,6 +280,12 @@ func (p *Character) StartMenu() {
 // -------------------- Main --------------------
 
 func main() {
+	intro := `Tu arrives dans l'école Ynov, chaque étage correspond à un niveau, il y en a 5, pour pouvoir t'échapper.
+Affronte les personnalités de l'école, les B1/B2/B3/M1/M2. Tu commences par l'accueil, où tu choisis ton personnage.
+Durant ton voyage, tu devras faire des combats avec des Boss de différents niveaux.`
+
+	typewriterPrint(intro, 50*time.Millisecond)
+
 	p1 := Character{}
 	p1.InitCharacter()
 	p1.StartMenu()
