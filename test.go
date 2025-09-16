@@ -52,7 +52,7 @@ func (p *Character) InitCharacter() {
 
 // Affiche les infos du personnage
 func (p Character) DisplayInfo() {
-	fmt.Println("=== Information du personnage ===")
+	fmt.Println("▁ ▂ ▄ ▅ ▆ ▇ █  Information du Personnage  █ ▇ ▆ ▅ ▄ ▂ ▁")
 	fmt.Printf("\t- Nom : %s\n", p.Nom)
 	fmt.Printf("\t- Classe : %s\n", p.Classe)
 	fmt.Printf("\t- Niveau : %d\n", p.Niveau)
@@ -67,7 +67,7 @@ func (p *Character) IsDead() bool {
 
 // Affiche l’inventaire
 func (p Character) AccessInventory() {
-	fmt.Println("=== Inventaire du personnage ===")
+	fmt.Println("▁ ▂ ▄ ▅ ▆ ▇ █  Inventaire du Personnage  █ ▇ ▆ ▅ ▄ ▂ ▁")
 	if len(p.Inventaire) == 0 {
 		fmt.Println("\tInventaire vide")
 		return
@@ -169,7 +169,7 @@ func (p *Character) MenuInventory() {
 		p.AccessInventory()
 		fmt.Println()
 		fmt.Print(yellowBold)
-		fmt.Println("=== Menu inventaire ===")
+		fmt.Println("▁ ▂ ▄ ▅ ▆ ▇ █  Menu Inventaire  █ ▇ ▆ ▅ ▄ ▂ ▁")
 		fmt.Print(reset)
 
 		fmt.Print(green)
@@ -207,7 +207,7 @@ func (p *Character) MerchantMenu() {
 	for {
 		fmt.Println()
 		fmt.Print(yellowBold)
-		fmt.Println("=== Marchand ===")
+		fmt.Println("▁ ▂ ▄ ▅ ▆ ▇ █  Marchand  █ ▇ ▆ ▅ ▄ ▂ ▁")
 		fmt.Print(reset)
 
 		fmt.Print(green)
@@ -246,7 +246,7 @@ func (p *Character) StartMenu() {
 	for {
 		fmt.Println()
 		fmt.Print(yellowBold)
-		fmt.Println("=== Menu Principal ===")
+		fmt.Println("▁ ▂ ▄ ▅ ▆ ▇ █  Menu Principal  █ ▇ ▆ ▅ ▄ ▂ ▁")
 		fmt.Print(reset)
 
 		fmt.Print(green)
@@ -280,9 +280,10 @@ func (p *Character) StartMenu() {
 // -------------------- Main --------------------
 
 func main() {
-	intro := `Tu arrives dans l'école Ynov, chaque étage correspond à un niveau, il y en a 5, pour pouvoir t'échapper.
-Affronte les personnalités de l'école, les B1/B2/B3/M1/M2. Tu commences par l'accueil, où tu choisis ton personnage.
-Durant ton voyage, tu devras faire des combats avec des Boss de différents niveaux.`
+	intro := `L'école Ynov s'étend devant toi, cinq étages à franchir, cinq niveaux pour t’échapper.
+Les personnalités de l'école — B1, B2, B3, M1, M2 — t’attendent. Tout commence à l'accueil, où tu choisis ton personnage.
+Ton parcours sera semé d’embûches, avec des combats contre des boss redoutables à chaque étape.
+.`
 
 	typewriterPrint(intro, 50*time.Millisecond)
 
