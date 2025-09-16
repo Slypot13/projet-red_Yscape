@@ -2,7 +2,10 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
+	"strings"
 	"time"
+	"unicode"
 )
 
 // -------------------- Items --------------------
@@ -20,174 +23,198 @@ type Character struct {
 	Niveau     int
 	Pv         int
 	PvMax      int
+	Attaque    int
+	Argent     int
 	Inventaire []Item
+	MaxInv     int
+	Capacite   string
+	Backpack   bool
 }
 
-// Affiche le texte en mode machine à écrire, en gras cyan
-func typewriterPrint(text string, delay time.Duration) {
-	startStyle := "\033[1;36m" // gras + cyan
-	resetStyle := "\033[0m"
-	fmt.Print(startStyle)
+// -------------------- Fonctions générales --------------------
+
+func typewriterPrint(text string, delay time.Duration, color string) {
+	reset := "\033[0m"
+	fmt.Print(color)
 	for _, c := range text {
 		fmt.Printf("%c", c)
 		time.Sleep(delay)
 	}
-	fmt.Println(resetStyle)
+	fmt.Println(reset)
 }
 
-// Initialise le personnage
-func (p *Character) InitCharacter() {
-	*p = Character{
-		Nom:    "cyril",
-		Classe: "Elfe",
-		Niveau: 1,
-		Pv:     40,
-		PvMax:  100,
-		Inventaire: []Item{
-			{Nom: "Potion magique", Quantite: 1},
-			{Nom: "Potion de vie", Quantite: 2},
+// -------------------- Création des personnages --------------------
+
+func CreateCharacters() []Character {
+	return []Character{
+		{
+			Nom:        "Le Codeur",
+			Classe:     "Élève",
+			Niveau:     1,
+			Pv:         75,
+			PvMax:      200,
+			Attaque:    75,
+			Argent:     20,
+			Inventaire: make([]Item, 0, 5),
+			MaxInv:     5,
+			Capacite:   "Objet aléatoire : Carte graphique (-10 PV) ou Chargeur iPhone 16 (-30 PV).",
+		},
+		{
+			Nom:        "L'Ingénieur",
+			Classe:     "Élève",
+			Niveau:     1,
+			Pv:         100,
+			PvMax:      200,
+			Attaque:    50,
+			Argent:     20,
+			Inventaire: make([]Item, 0, 5),
+			MaxInv:     5,
+			Capacite:   "Inflige +10 dégâts supplémentaires à chaque combat.",
+		},
+		{
+			Nom:        "Le Trackeur",
+			Classe:     "Élève",
+			Niveau:     1,
+			Pv:         50,
+			PvMax:      200,
+			Attaque:    100,
+			Argent:     20,
+			Inventaire: make([]Item, 0, 5),
+			MaxInv:     5,
+			Capacite:   "1 chance sur 3 de doubler son attaque (⚡ KAMEAMEAMEAMEA !).",
 		},
 	}
 }
 
-// Affiche les infos du personnage
+// -------------------- Création nom custom --------------------
+
+func characterCreation(p Character) Character {
+	var nom string
+	for {
+		fmt.Print("✏️  Choisis un nom pour ton personnage : ")
+		fmt.Scan(&nom)
+
+		valid := true
+		for _, r := range nom {
+			if !unicode.IsLetter(r) {
+				valid = false
+				break
+			}
+		}
+		if !valid {
+			fmt.Println("❌ Le nom ne doit contenir que des lettres.")
+			continue
+		}
+
+		nom = strings.ToLower(nom)
+		nom = strings.Title(nom)
+		break
+	}
+
+	p.Nom = nom
+	return p
+}
+
+// -------------------- Inventaire --------------------
+
+func (p *Character) DisplayInventory() {
+	fmt.Println("\n🎒 Inventaire :")
+	if len(p.Inventaire) == 0 {
+		fmt.Println("  (vide)")
+	} else {
+		for i, item := range p.Inventaire {
+			fmt.Printf(" %d - %s (x%d)\n", i+1, item.Nom, item.Quantite)
+		}
+	}
+	fmt.Printf("Capacité utilisée : %d/%d\n", len(p.Inventaire), p.MaxInv)
+}
+
+// Ajouter objet à l’inventaire
+func (p *Character) AddItem(nom string) {
+	// Vérifie la capacité
+	if len(p.Inventaire) >= p.MaxInv {
+		fmt.Println("❌ Ton inventaire est plein !")
+		return
+	}
+	// Vérifie si déjà présent
+	for i, item := range p.Inventaire {
+		if item.Nom == nom {
+			p.Inventaire[i].Quantite++
+			fmt.Printf("✅ %s ajouté à l'inventaire (x%d)\n", nom, p.Inventaire[i].Quantite)
+			return
+		}
+	}
+	// Sinon ajoute un nouvel item
+	p.Inventaire = append(p.Inventaire, Item{Nom: nom, Quantite: 1})
+	fmt.Printf("✅ %s ajouté à l'inventaire !\n", nom)
+}
+
+// -------------------- Affichage infos --------------------
+
 func (p Character) DisplayInfo() {
-	fmt.Println("☆━━━━━━☆ Information du Personnage ☆━━━━━━☆")
+	fmt.Println("\n☆━━━━━━☆ Information du Personnage ☆━━━━━━☆")
 	fmt.Printf("\t- Nom : %s\n", p.Nom)
 	fmt.Printf("\t- Classe : %s\n", p.Classe)
 	fmt.Printf("\t- Niveau : %d\n", p.Niveau)
-	fmt.Printf("\t- Pv : %d\n", p.Pv)
-	fmt.Printf("\t- PvMax : %d\n", p.PvMax)
-}
-
-// Vérifie si le personnage est mort
-func (p *Character) IsDead() bool {
-	return p.Pv <= 0
-}
-
-// Affiche l’inventaire
-func (p Character) AccessInventory() {
-	fmt.Println("»»————-  Inventaire du Personnage  ————-««")
+	fmt.Printf("\t- Pv : %d/%d\n", p.Pv, p.PvMax)
+	fmt.Printf("\t- Attaque : %d\n", p.Attaque)
+	fmt.Printf("\t- Argent : %d£\n", p.Argent)
+	fmt.Printf("\t- Capacité : %s\n", p.Capacite)
+	fmt.Printf("\t- Inventaire : %d/%d\n", len(p.Inventaire), p.MaxInv)
 	if len(p.Inventaire) == 0 {
-		fmt.Println("\tInventaire vide")
-		return
-	}
-	for _, item := range p.Inventaire {
-		fmt.Printf("\t- %s x%d\n", item.Nom, item.Quantite)
+		fmt.Println("\t   (Vide)")
 	}
 }
 
-// Ajoute un item à l’inventaire
-func (p *Character) AddInventory(nom string, quantite int) {
-	for i := range p.Inventaire {
-		if p.Inventaire[i].Nom == nom {
-			p.Inventaire[i].Quantite += quantite
-			return
-		}
-	}
-	p.Inventaire = append(p.Inventaire, Item{Nom: nom, Quantite: quantite})
-}
+// -------------------- Marchand --------------------
 
-// Retire un item de l’inventaire
-func (p *Character) RemoveInventory(nom string, quantite int) bool {
-	for i := range p.Inventaire {
-		if p.Inventaire[i].Nom == nom {
-			if p.Inventaire[i].Quantite >= quantite {
-				p.Inventaire[i].Quantite -= quantite
-				if p.Inventaire[i].Quantite == 0 {
-					p.Inventaire = append(p.Inventaire[:i], p.Inventaire[i+1:]...)
-				}
-				return true
-			}
-			break
-		}
-	}
-	return false
-}
-
-// Effet poison (diminue PV 3 fois)
-func (p *Character) PoisonPot() {
-	fmt.Println("Potion de poison utilisée !")
-
-	for i := 1; i <= 3; i++ {
-		time.Sleep(1 * time.Second)
-		p.Pv -= 10
-		if p.Pv < 0 {
-			p.Pv = 0
-		}
-		fmt.Printf("⚠️  Poison - Dégâts %d/3 : %d PV / %d PV Max\n", i, p.Pv, p.PvMax)
-		if p.IsDead() {
-			fmt.Println("💀 Vous êtes mort à cause du poison !")
-			return
-		}
-	}
-}
-
-// Utiliser potion de poison si disponible
-func (p *Character) UsePoisonPotion() {
-	for i := range p.Inventaire {
-		if p.Inventaire[i].Nom == "Potion de poison" && p.Inventaire[i].Quantite > 0 {
-			p.Inventaire[i].Quantite--
-			if p.Inventaire[i].Quantite == 0 {
-				p.Inventaire = append(p.Inventaire[:i], p.Inventaire[i+1:]...)
-			}
-			p.PoisonPot()
-			return
-		}
-	}
-	fmt.Println("⚠️  Vous n'avez pas de potion de poison.")
-}
-
-// Utiliser potion de vie
-func (p *Character) TakePotion() {
-	for i := range p.Inventaire {
-		if p.Inventaire[i].Nom == "Potion de vie" && p.Inventaire[i].Quantite > 0 {
-			p.Inventaire[i].Quantite--
-			if p.Inventaire[i].Quantite == 0 {
-				p.Inventaire = append(p.Inventaire[:i], p.Inventaire[i+1:]...)
-			}
-			p.Pv += 30
-			if p.Pv > p.PvMax {
-				p.Pv = p.PvMax
-			}
-			fmt.Printf("💖 Potion de vie utilisée ! PV restaurés : %d/%d\n", p.Pv, p.PvMax)
-			return
-		}
-	}
-	fmt.Println("⚠️  Vous n'avez pas de potion de vie.")
-}
-
-// Menu inventaire avec couleur
-func (p *Character) MenuInventory() {
-	const (
-		yellowBold = "\033[1;33m"
-		green      = "\033[32m"
-		reset      = "\033[0m"
-	)
-
+func (p *Character) MerchantMenu() {
 	for {
-		p.AccessInventory()
-		fmt.Println()
-		fmt.Print(yellowBold)
-		fmt.Println("╭─━━━━━─╯  Menu Inventaire  ╰─━━━━━─╮")
-		fmt.Print(reset)
-
-		fmt.Print(green)
-		fmt.Println("\t1 - Utiliser une potion de vie")
-		fmt.Println("\t2 - Utiliser une potion de poison")
-		fmt.Println("\t0 - Retour")
-		fmt.Print(reset)
-
-		fmt.Print("Choix : ")
+		fmt.Println("\n🏪 Bienvenue au Marchand du Campus !")
+		fmt.Println("\t1 - RedBull (10£)")
+		fmt.Println("\t2 - Coca bien frais Chakal (15£)")
+		fmt.Println("\t3 - Café dilué au Ciao Kambucha (10£)")
+		fmt.Println("\t4 - Sac à dos perdu (30£) [permanent]")
+		fmt.Println("\t0 - Quitter")
+		fmt.Printf("💰 Votre argent : %d£\n", p.Argent)
 
 		var choix int
+		fmt.Print("Choix : ")
 		fmt.Scan(&choix)
 
 		switch choix {
 		case 1:
-			p.TakePotion()
+			if p.Argent >= 10 {
+				p.Argent -= 10
+				p.AddItem("RedBull")
+			} else {
+				fmt.Println("❌ Pas assez d'argent...")
+			}
 		case 2:
-			p.UsePoisonPotion()
+			if p.Argent >= 15 {
+				p.Argent -= 15
+				p.AddItem("Coca bien frais Chakal")
+			} else {
+				fmt.Println("❌ Pas assez d'argent...")
+			}
+		case 3:
+			if p.Argent >= 10 {
+				p.Argent -= 10
+				p.AddItem("Café dilué au Ciao Kambucha")
+			} else {
+				fmt.Println("❌ Pas assez d'argent...")
+			}
+		case 4:
+			if p.Backpack {
+				fmt.Println("🎒 Tu possèdes déjà le Sac à dos perdu.")
+			} else if p.Argent >= 30 {
+				p.Argent -= 30
+				p.MaxInv = 10
+				p.Backpack = true
+				fmt.Println("✅ Tu as acheté le Sac à dos perdu ! Inventaire max = 10 objets.")
+			} else {
+				fmt.Println("❌ Pas assez d'argent...")
+			}
 		case 0:
 			return
 		default:
@@ -196,76 +223,52 @@ func (p *Character) MenuInventory() {
 	}
 }
 
-// Menu marchand avec couleur
-func (p *Character) MerchantMenu() {
-	const (
-		yellowBold = "\033[1;33m"
-		green      = "\033[32m"
-		reset      = "\033[0m"
-	)
+// -------------------- Choix personnage --------------------
 
-	for {
-		fmt.Println()
-		fmt.Print(yellowBold)
-		fmt.Println("┏━━━━━━┛  Marchand  ┗━━━━━━┓")
-		fmt.Print(reset)
+func ChooseCharacter() Character {
+	personnages := CreateCharacters()
 
-		fmt.Print(green)
-		fmt.Println("\t1 - Potion de vie (gratuit)")
-		fmt.Println("\t2 - Potion de poison (gratuit)")
-		fmt.Println("\t0 - Quitter")
-		fmt.Print(reset)
+	fmt.Println("\n━━━━━━━━━━━ Présentation des personnages ━━━━━━━━━━━")
 
-		fmt.Print("Choix : ")
-
-		var choix int
-		fmt.Scan(&choix)
-
-		switch choix {
-		case 1:
-			p.AddInventory("Potion de vie", 1)
-			fmt.Println("Vous avez reçu : Potion de vie x1")
-		case 2:
-			p.AddInventory("Potion de poison", 1)
-			fmt.Println("Vous avez reçu : Potion de poison x1")
-		case 0:
-			return
-		default:
-			fmt.Println("Choix invalide")
-		}
+	for i, perso := range personnages {
+		typewriterPrint(fmt.Sprintf("Découvrons le personnage [%d] : %s", i+1, perso.Nom), 40*time.Millisecond, "\033[35m")
+		perso.DisplayInfo()
+		fmt.Println("------------------------------------------------")
+		time.Sleep(2 * time.Second)
 	}
+
+	var choix int
+	for {
+		fmt.Print("➡️  Entre le numéro de ton personnage : ")
+		fmt.Scan(&choix)
+		if choix >= 1 && choix <= len(personnages) {
+			break
+		}
+		fmt.Println("❌ Choix invalide.")
+	}
+
+	return characterCreation(personnages[choix-1])
 }
 
-// Menu principal du jeu avec titre jaune gras et choix verts
-func (p *Character) StartMenu() {
-	const (
-		yellowBold = "\033[1;33m"
-		green      = "\033[32m"
-		reset      = "\033[0m"
-	)
-	for {
-		fmt.Println()
-		fmt.Print(yellowBold)
-		fmt.Println("▁ ▂ ▄ ▅ ▆ ▇ █  Menu Principal  █ ▇ ▆ ▅ ▄ ▂ ▁")
-		fmt.Print(reset)
+// -------------------- Menu Principal --------------------
 
-		fmt.Print(green)
+func (p *Character) StartMenu() {
+	for {
+		fmt.Println("\n▁ ▂ ▄ ▅ ▆ ▇ █  Menu Principal  █ ▇ ▆ ▅ ▄ ▂ ▁")
 		fmt.Println("\t1 - Afficher infos personnage")
 		fmt.Println("\t2 - Inventaire")
-		fmt.Println("\t3 - Marchand")
+		fmt.Println("\t3 - Marchand du Campus")
 		fmt.Println("\t0 - Quitter")
-		fmt.Print(reset)
-
-		fmt.Print("Choix : ")
 
 		var choix int
+		fmt.Print("Choix : ")
 		fmt.Scan(&choix)
 
 		switch choix {
 		case 1:
 			p.DisplayInfo()
 		case 2:
-			p.MenuInventory()
+			p.DisplayInventory()
 		case 3:
 			p.MerchantMenu()
 		case 0:
@@ -280,14 +283,54 @@ func (p *Character) StartMenu() {
 // -------------------- Main --------------------
 
 func main() {
-	intro := `L'école Ynov s'étend devant toi, cinq étages à franchir, cinq niveaux pour t’échapper.
-Les personnalités de l'école — B1, B2, B3, M1, M2 — t’attendent. Tout commence à l'accueil, où tu choisis ton personnage.
-Ton parcours sera semé d’embûches, avec des combats contre des boss redoutables à chaque étape.
-.`
+	rand.Seed(time.Now().UnixNano())
 
-	typewriterPrint(intro, 50*time.Millisecond)
+	// Building réaliste et imposant
+	fmt.Println("\033[1;33m")
+	fmt.Println(`
+          ██████████████████████████████████████████
+          █  []  []  []  []  []  []  []  []  []  []█
+          █  []  []  []  []  []  []  []  []  []  []█
+          █  []  []  []  []  []  []  []  []  []  []█
+          █  []  []  []  []  []  []  []  []  []  []█
+          █  []  []  []  []  []  []  []  []  []  []█
+          █  []  []  []  []  []  []  []  []  []  []█
+          ██████████████████████████████████████████
+          ██████████████████████████████████████████
+                 ┌──────────────┐
+                 │      🚪      │
+                 │     (👤)     │
+                 └──────────────┘
+	`)
+	fmt.Println("\033[0m")
 
-	p1 := Character{}
-	p1.InitCharacter()
-	p1.StartMenu()
+	// Intro avec narration
+	intro := `L'école Ynov s'étend devant toi, six étages à franchir...
+À l’accueil, deux étudiantes t’attendent : Marie et Lisa.
+Elles te fixent avec un regard déterminé.
+
+「 Marie 」: Enfin te voilà ! On n’a pas beaucoup de temps...
+「 Lisa 」: Le campus est rempli de pièges et de boss terrifiants.
+Tu devras gravir les 6 étages pour t’échapper.
+
+Tu as cinq étages à franchir, cinq niveaux pour t’échapper. 
+Les personnalités de l'école — B1, B2, B3, M1, M2 — t’attendent. 
+Tout commence à l'accueil, où tu choisis ton personnage...
+
+Choisis-le bien et gare à toi ! Les 5 monstres que tu vas affronter sont d’anciens élèves,
+bloqués dans le passé à cause de la faille spatio-temporelle, suite au jour où Cyril et Bastien
+ont fusionné leur PC pour créer une boucle à remonter le temps.
+
+Il ne te reste que quelques heures pour récupérer ton Saint Diplôme à temps et sauver l'humanité.
+
+\033[1;31m⚠️ Les 5 monstres sont déjà en route... \033[0m
+
+Nous comptons sur toi jeune Skylanders.. Euhh éleve de Ynov !!!`
+	typewriterPrint(intro, 35*time.Millisecond, "\033[36m")
+
+	player := ChooseCharacter()
+	fmt.Println("\n✅ Tu as choisi ton héros !")
+	player.DisplayInfo()
+
+	player.StartMenu()
 }
