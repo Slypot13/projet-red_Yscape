@@ -52,7 +52,7 @@ func (p *Character) InitCharacter() {
 
 // Affiche les infos du personnage
 func (p Character) DisplayInfo() {
-	fmt.Println("▁ ▂ ▄ ▅ ▆ ▇ █  Information du Personnage  █ ▇ ▆ ▅ ▄ ▂ ▁")
+	fmt.Println("☆━━━━━━☆ Information du Personnage ☆━━━━━━☆")
 	fmt.Printf("\t- Nom : %s\n", p.Nom)
 	fmt.Printf("\t- Classe : %s\n", p.Classe)
 	fmt.Printf("\t- Niveau : %d\n", p.Niveau)
@@ -67,7 +67,7 @@ func (p *Character) IsDead() bool {
 
 // Affiche l’inventaire
 func (p Character) AccessInventory() {
-	fmt.Println("▁ ▂ ▄ ▅ ▆ ▇ █  Inventaire du Personnage  █ ▇ ▆ ▅ ▄ ▂ ▁")
+	fmt.Println("»»————-  Inventaire du Personnage  ————-««")
 	if len(p.Inventaire) == 0 {
 		fmt.Println("\tInventaire vide")
 		return
@@ -169,7 +169,7 @@ func (p *Character) MenuInventory() {
 		p.AccessInventory()
 		fmt.Println()
 		fmt.Print(yellowBold)
-		fmt.Println("▁ ▂ ▄ ▅ ▆ ▇ █  Menu Inventaire  █ ▇ ▆ ▅ ▄ ▂ ▁")
+		fmt.Println("╭─━━━━━─╯  Menu Inventaire  ╰─━━━━━─╮")
 		fmt.Print(reset)
 
 		fmt.Print(green)
@@ -207,7 +207,7 @@ func (p *Character) MerchantMenu() {
 	for {
 		fmt.Println()
 		fmt.Print(yellowBold)
-		fmt.Println("▁ ▂ ▄ ▅ ▆ ▇ █  Marchand  █ ▇ ▆ ▅ ▄ ▂ ▁")
+		fmt.Println("┏━━━━━━┛  Marchand  ┗━━━━━━┓")
 		fmt.Print(reset)
 
 		fmt.Print(green)
