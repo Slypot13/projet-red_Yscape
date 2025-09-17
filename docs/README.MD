@@ -8,7 +8,7 @@
  
 
 				BROUILLON :
-			tu arrive dans l'école Ynov, chaque étage correspond à un niveau, il y en a 5, pour pouvoir t'échapper. Affronte les personnalités de l'école, les B1/B2/B3/M1/M2				tu commence par l'accueil, ou tu choisis ton personnage {ChoixDuPersonnage}. Durant ton voyage tu devra faire des combats, avec des Boss de différents niveaux.
+			tu arrive dans l'école Ynov, chaque étage correspond à un niveau, il y en a 5, pour pouvoir t'échapper. Affronte les personnalités de l'école, les B1/B2/B3/M1/M2 tu commence par l'accueil, ou tu choisis ton personnage . Durant ton voyage tu devra faire des combats, avec des Boss de différents niveaux.
             Une fois le Boss Final vaincu, tu partira en hélicoptère du rooftop de l'établissement avec ton diplôme.
 
 

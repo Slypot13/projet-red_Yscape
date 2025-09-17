@@ -129,14 +129,11 @@ func (p *Character) DisplayInventory() {
 	fmt.Printf("Capacité utilisée : %d/%d\n", len(p.Inventaire), p.MaxInv)
 }
 
-// Ajouter objet à l’inventaire
 func (p *Character) AddItem(nom string) {
-	// Vérifie la capacité
 	if len(p.Inventaire) >= p.MaxInv {
 		fmt.Println("❌ Ton inventaire est plein !")
 		return
 	}
-	// Vérifie si déjà présent
 	for i, item := range p.Inventaire {
 		if item.Nom == nom {
 			p.Inventaire[i].Quantite++
@@ -144,7 +141,6 @@ func (p *Character) AddItem(nom string) {
 			return
 		}
 	}
-	// Sinon ajoute un nouvel item
 	p.Inventaire = append(p.Inventaire, Item{Nom: nom, Quantite: 1})
 	fmt.Printf("✅ %s ajouté à l'inventaire !\n", nom)
 }
@@ -223,23 +219,35 @@ func (p *Character) MerchantMenu() {
 	}
 }
 
-// -------------------- Choix personnage --------------------
+// -------------------- Choix personnage (horizontal) --------------------
 
 func ChooseCharacter() Character {
 	personnages := CreateCharacters()
 
-	fmt.Println("\n━━━━━━━━━━━ Présentation des personnages ━━━━━━━━━━━")
+	fmt.Println("\n━━━━━━━━━━━ Présentation des personnages ━━━━━━━━━━━\n")
 
-	for i, perso := range personnages {
-		typewriterPrint(fmt.Sprintf("Découvrons le personnage [%d] : %s", i+1, perso.Nom), 40*time.Millisecond, "\033[35m")
-		perso.DisplayInfo()
-		fmt.Println("------------------------------------------------")
-		time.Sleep(2 * time.Second)
+	lines := make([][]string, 3)
+	for i, p := range personnages {
+		lines[i] = []string{
+			fmt.Sprintf("╭───────────── %d ─────────────╮", i+1),
+			fmt.Sprintf("│ %-28s │", p.Nom),
+			fmt.Sprintf("│ Classe : %-19s │", p.Classe),
+			fmt.Sprintf("│ Niveau : %-19d │", p.Niveau),
+			fmt.Sprintf("│ PV : %-23d │", p.Pv),
+			fmt.Sprintf("│ Attaque : %-18d │", p.Attaque),
+			fmt.Sprintf("│ Capacité :                     │"),
+			fmt.Sprintf("│ %-28s │", truncate(p.Capacite, 28)),
+			"╰──────────────────────────────╯",
+		}
+	}
+
+	for i := 0; i < len(lines[0]); i++ {
+		fmt.Printf("%s   %s   %s\n", lines[0][i], lines[1][i], lines[2][i])
 	}
 
 	var choix int
 	for {
-		fmt.Print("➡️  Entre le numéro de ton personnage : ")
+		fmt.Print("\n➡️  Entre le numéro de ton personnage : ")
 		fmt.Scan(&choix)
 		if choix >= 1 && choix <= len(personnages) {
 			break
@@ -248,6 +256,13 @@ func ChooseCharacter() Character {
 	}
 
 	return characterCreation(personnages[choix-1])
+}
+
+func truncate(s string, max int) string {
+	if len(s) <= max {
+		return s
+	}
+	return s[:max-3] + "..."
 }
 
 // -------------------- Menu Principal --------------------
@@ -285,7 +300,6 @@ func (p *Character) StartMenu() {
 func main() {
 	rand.Seed(time.Now().UnixNano())
 
-	// Building réaliste et imposant
 	fmt.Println("\033[1;33m")
 	fmt.Println(`
           ██████████████████████████████████████████
@@ -304,7 +318,6 @@ func main() {
 	`)
 	fmt.Println("\033[0m")
 
-	// Intro avec narration
 	intro := `L'école Ynov s'étend devant toi, six étages à franchir...
 À l’accueil, deux étudiantes t’attendent : Marie et Lisa.
 Elles te fixent avec un regard déterminé.
@@ -313,20 +326,8 @@ Elles te fixent avec un regard déterminé.
 「 Lisa 」: Le campus est rempli de pièges et de boss terrifiants.
 Tu devras gravir les 6 étages pour t’échapper.
 
-Tu as cinq étages à franchir, cinq niveaux pour t’échapper. 
-Les personnalités de l'école — B1, B2, B3, M1, M2 — t’attendent. 
-Tout commence à l'accueil, où tu choisis ton personnage...
-
-Choisis-le bien et gare à toi ! Les 5 monstres que tu vas affronter sont d’anciens élèves,
-bloqués dans le passé à cause de la faille spatio-temporelle, suite au jour où Cyril et Bastien
-ont fusionné leur PC pour créer une boucle à remonter le temps.
-
-Il ne te reste que quelques heures pour récupérer ton Saint Diplôme à temps et sauver l'humanité.
-
-\033[1;31m⚠️ Les 5 monstres sont déjà en route... \033[0m
-
-Nous comptons sur toi jeune Skylanders.. Euhh éleve de Ynov !!!`
-	typewriterPrint(intro, 35*time.Millisecond, "\033[36m")
+Choisis ton personnage...`
+	typewriterPrint(intro, 25*time.Millisecond, "\033[36m")
 
 	player := ChooseCharacter()
 	fmt.Println("\n✅ Tu as choisi ton héros !")
