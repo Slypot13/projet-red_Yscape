@@ -10,6 +10,7 @@ import (
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
+	go playSong()
 	introduction()
 
 	player := ChooseCharacter()
