@@ -16,9 +16,5 @@ func introduction() {
 	typewriterPrint("Il ne te reste que quelques heures pour récupérer ton Saint Diplôme à temps et sauver l'humanité.", 30*time.Millisecond, "\033[36m")
 
 	// laisser la phrase finale EXACTE comme demandé
-<<<<<<< HEAD
-	typewriterPrint("Nous comptons sur toi jeune teteeeeeeeeeeeeeee de Neuille.. Euhh éleve de Ynov !!!", 40*time.Millisecond, "\033[1;31m")
-=======
-	typewriterPrint("Nous comptons sur toi jeune hmar.. Euhh éleve de Ynov !!!", 40*time.Millisecond, "\033[1;31m")
->>>>>>> 466b1667bf5ddca58c5bca020927049513b859dd
+	typewriterPrint("Nous comptons sur toi jeune Paff miteux au gland de lait.. Euhh éleve de Ynov !!!", 40*time.Millisecond, "\033[1;31m")
 }
