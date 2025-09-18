@@ -9,19 +9,23 @@ func (p *Character) StartMenu() {
 		yellowBold = "\033[1;33m"
 		green      = "\033[32m"
 		reset      = "\033[0m"
+		white      = "\033[97m"
+		purpleBold = "\033[1;35m"
 	)
 	for {
 		fmt.Println()
-		fmt.Print(yellowBold)
-		fmt.Println("▁ ▂ ▄ ▅ ▆ ▇ █  Menu Principal  █ ▇ ▆ ▅ ▄ ▂ ▁")
+		fmt.Print(purpleBold)
+		fmt.Println("╔══════════════════════════════════╗")
+		fmt.Println("║         Menu Principal           ║")
+		fmt.Println("╚══════════════════════════════════╝")
 		fmt.Print(reset)
 
-		fmt.Print(green)
+		fmt.Print(white)
 		fmt.Println("\t1 - Afficher infos personnage")
 		fmt.Println("\t2 - Inventaire")
 		fmt.Println("\t3 - Marchand du Campus")
 		fmt.Println("\t4 - Forgeron")
-		fmt.Println("\t5 - Combat d'entraînement (ClasseInfobugé)")
+		fmt.Println("\t5 - Combat (ClasseInfobugé)")
 		fmt.Println("\t0 - Quitter")
 		fmt.Print(reset)
 

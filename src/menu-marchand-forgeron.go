@@ -7,27 +7,30 @@ import "fmt"
 func (p *Character) MerchantMenu() {
 	for {
 		fmt.Println()
-		fmt.Print("\033[1;33m")
+		fmt.Print("\033[1;33m") // Jaune gras
 		fmt.Println("┏━━━━━━┛  Marchand du Campus  ┗━━━━━━┓")
-		fmt.Print("\033[0m")
+		fmt.Print("\033[0m") // Reset couleur
 
-		fmt.Print("\033[32m")
+		// Options en blanc
+		fmt.Print("\033[97m") // Blanc
 		fmt.Println("\t1 - RedBull (+50 PV) - 10£")
 		fmt.Println("\t2 - Coca bien frais Chakal (+10% attaque / 1 tour) - 15£")
 		fmt.Println("\t3 - Café dilué au Ciao Kambucha (Poison -10PV/s 3s) - 20£")
-		fmt.Println("\t4 - Sac à dos perdu (+5 places inventaire) - 30£")
+		fmt.Println("\t4 - Sacoche perdu (+5 places inventaire) - 30£")
 		fmt.Println("\t0 - Retour")
-		fmt.Print("\033[0m")
+		fmt.Print("\033[0m") // Reset couleur
 
+		// Infos supplémentaires
 		fmt.Printf("💰 Argent : %d£\n", p.Argent)
 		fmt.Print("Choix : ")
+
 		var choix int
 		fmt.Scan(&choix)
 
 		switch choix {
 		case 1:
 			if p.Argent < 10 {
-				fmt.Println("❌ Pas assez d'argent pour acheter RedBull.")
+				fmt.Println("❌ Ta pas d'argent pour acheter une RedBull.")
 			} else {
 				if ok := p.AddInventory("RedBull", 1); ok {
 					p.Argent -= 10
@@ -38,7 +41,7 @@ func (p *Character) MerchantMenu() {
 			}
 		case 2:
 			if p.Argent < 15 {
-				fmt.Println("❌ Pas assez d'argent pour acheter le Coca.")
+				fmt.Println("❌ Ta pas assez d'argent pour acheter le Coca.")
 			} else {
 				if ok := p.AddInventory("Coca bien frais Chakal", 1); ok {
 					p.Argent -= 15
@@ -49,7 +52,7 @@ func (p *Character) MerchantMenu() {
 			}
 		case 3:
 			if p.Argent < 20 {
-				fmt.Println("❌ Pas assez d'argent pour acheter le Café dilué.")
+				fmt.Println("❌ Ta pas assez d'argent pour acheter le Café dilué.")
 			} else {
 				if ok := p.AddInventory("Café dilué au Ciao Kambucha", 1); ok {
 					p.Argent -= 20
@@ -60,14 +63,14 @@ func (p *Character) MerchantMenu() {
 			}
 		case 4:
 			if p.Backpack {
-				fmt.Println("🎒 Tu possèdes déjà le Sac à dos perdu.")
+				fmt.Println("🎒 Tu possèdes déjà la Sacoche perdu.")
 			} else if p.Argent < 30 {
-				fmt.Println("❌ Pas assez d'argent pour acheter le Sac à dos perdu.")
+				fmt.Println("❌ Pas assez d'argent pour acheter la Sacoche perdu.")
 			} else {
 				p.Argent -= 30
 				p.Backpack = true
 				p.MaxInv = 10
-				fmt.Println("✅ Achat : Sac à dos perdu. Inventaire étendu à 10 emplacements.")
+				fmt.Println("✅ Achat : Sacoche perdu. Inventaire étendu à 10 emplacements.")
 			}
 		case 0:
 			return
@@ -79,26 +82,28 @@ func (p *Character) MerchantMenu() {
 
 func (p *Character) BlacksmithMenu() {
 	for {
-		fmt.Println()
-		fmt.Print("\033[1;36m")
+		fmt.Print("\033[1;33m") // Jaune
 		fmt.Println("┏━━━━━━┛  Forgeron  ┗━━━━━━┓")
 		fmt.Print("\033[0m")
 
-		fmt.Print("\033[32m")
+		// Options en blanc
+		fmt.Print("\033[97m") // Blanc
 		fmt.Println("\t1 - Casquette Gucci (60 pièces) [+20% attaque à partir du 3e tour]")
 		fmt.Println("\t2 - Asics Kayano (60 pièces) [empêche le monstre de jouer 1 tour]")
 		fmt.Println("\t0 - Retour")
 		fmt.Print("\033[0m")
 
-		fmt.Printf("⚠️ Pour acheter et équiper, tu dois posséder l'objet 'flow du contrôleur RATP'.\n")
-		fmt.Printf("💰 Pièces : %d\n", p.Pieces)
+		// Infos supplémentaires
+		fmt.Printf("⚠️ Pour acheter et équiper, tu dois posséder l'objet 'Flow du contrôleur RATP'.\n")
+		fmt.Printf("💰 Argent : %d\n", p.Argent)
 		fmt.Print("Choix : ")
+
 		var choix int
 		fmt.Scan(&choix)
 
 		switch choix {
 		case 1:
-			if p.Pieces < 60 {
+			if p.Argent < 60 {
 				fmt.Println("❌ Pas assez de pièces pour la Casquette Gucci.")
 				continue
 			}
@@ -110,10 +115,10 @@ func (p *Character) BlacksmithMenu() {
 				fmt.Println("❌ Inventaire plein, impossible d'ajouter la Casquette Gucci.")
 				continue
 			}
-			p.Pieces -= 60
+			p.Argent -= 60
 			fmt.Println("✅ Tu as fabriqué la Casquette Gucci (ajoutée à l'inventaire).")
 		case 2:
-			if p.Pieces < 60 {
+			if p.Argent < 60 {
 				fmt.Println("❌ Pas assez de pièces pour les Asics Kayano.")
 				continue
 			}
@@ -125,7 +130,7 @@ func (p *Character) BlacksmithMenu() {
 				fmt.Println("❌ Inventaire plein, impossible d'ajouter Asics Kayano.")
 				continue
 			}
-			p.Pieces -= 60
+			p.Argent -= 60
 			fmt.Println("✅ Tu as fabriqué les Asics Kayano (ajoutées à l'inventaire).")
 		case 0:
 			return

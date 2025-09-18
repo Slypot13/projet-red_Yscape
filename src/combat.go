@@ -39,22 +39,23 @@ func CharacterTurn(monstre *Monster, player *Character, tour *int, monsterSkippe
 	fmt.Scan(&choix)
 	switch choix {
 	case 1:
-		// Attaque basique - tenir compte si casquette active => l'effet casquette s'applique via CasquetteActive field
 		damage := player.Attaque
 		fmt.Printf("%s utilise Attaque basique et inflige %d dégâts !\n", player.Nom, damage)
 		monstre.Pv -= damage
 		if monstre.Pv < 0 {
 			monstre.Pv = 0
 		}
-		fmt.Printf("%s PV : %d/%d\n", monstre.Nom, monstre.Pv, monstre.PvMax)
+
+		// Affichage barre de vie monstre
+		bar := DisplayHPBar(monstre.Pv, monstre.PvMax, 20)
+		fmt.Printf("%s PV : [%s] %d/%d\n", monstre.Nom, bar, monstre.Pv, monstre.PvMax)
+
 	case 2:
-		// Accès à l'inventaire (utilisation d'objets en combat)
 		player.AccessInventoryCombat()
 	case 3:
-		// utiliser Asics si équipé
 		if player.Equipement.Pieds == "Asics Kayano" && player.HasAsicsEffect {
 			*monsterSkipped = true
-			player.HasAsicsEffect = false // effet consommé (ou garder selon design)
+			player.HasAsicsEffect = false
 			fmt.Println("👟 Tu actives Asics Kayano : le monstre est bloqué pour 1 tour !")
 		} else {
 			fmt.Println("❌ Tu n'as pas Asics Kayano équipées ou l'effet n'est pas disponible.")
@@ -62,9 +63,7 @@ func CharacterTurn(monstre *Monster, player *Character, tour *int, monsterSkippe
 	default:
 		fmt.Println("Choix invalide, tu perds ton action.")
 	}
-	// fin du turn du joueur, on décrémente les tours boost si actifs (mais revert après le tour du monstre)
-	// CasquetteDelay est gérée dans boucle de combat
-	_ = tour
+	fmt.Println("-----------------------")
 }
 
 func (p *Character) AccessInventoryCombat() {
@@ -104,7 +103,7 @@ func TrainingFight(player *Character) {
 	monstre := InitGoblin()
 	tour := 1
 	monsterSkipped := false
-	fmt.Println("\n⚔️ Début du combat d'entraînement contre", monstre.Nom, "!")
+	fmt.Println("\n⚔️ Début du combat contre", monstre.Nom, "!")
 	for player.Pv > 0 && monstre.Pv > 0 {
 		fmt.Printf("\n======== Tour %d ========\n", tour)
 
@@ -158,16 +157,18 @@ func TrainingFight(player *Character) {
 		tour++
 	}
 
-	// Fin du combat
+	// Résultat du combat
 	if player.Pv <= 0 {
-		fmt.Println("\n❌ Tes vaincu, tu flop trop... Retour au menu principal.")
+		fmt.Println("\n❌ Tu es vaincu... Retour au menu principal.")
+		// optionnel : restaurer PV partiellement ou renvoyer au menu
 	} else {
 		fmt.Println("\n🎉 Yesss mon gaté c'est gagné ! EZ la classe")
-		player.Pieces += 15
+		player.Argent += 15
 		added := player.AddInventory("Bouteille de Kambucha alcoolisé à 2%", 1)
 		if added {
 			fmt.Println("Récompense : +15 pièces et 1x Bouteille de Kambucha alcoolisé à 2% ajouté à l'inventaire (soigne 30PV).")
 		} else {
+			// si inventaire plein, on donne argent à la place
 			player.Argent += 0
 			fmt.Println("Ton inventaire était plein : la récompense 'Bouteille de Kambucha' n'a pas pu être ajoutée.")
 			fmt.Println("Tu as quand même reçu +15 pièces.")
