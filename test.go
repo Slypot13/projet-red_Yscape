@@ -117,22 +117,48 @@ func CreateCharacters() []Character {
 // -------------------- Building ASCII --------------------
 
 func printCampusBig() {
-	fmt.Println("\033[1;33m") // jaune gras
+	fmt.Println("\033[1;35m")
 	fmt.Println(`
-████████████████████████████████████████████████████████████
-█  []  []  []  []  []  []  []  []  []  []  []  []  []  []  █
-█  []  []  []  []  []  []  []  []  []  []  []  []  []  []  █
-█  []  []  []  []  []  []  []  []  []  []  []  []  []  []  █
-█  []  []  []  []  []  []  []  []  []  []  []  []  []  []  █
-█  []  []  []  []  []  []  []  []  []  []  []  []  []  []  █
-█  []  []  []  []  []  []  []  []  []  []  []  []  []  []  █
-████████████████████████████████████████████████████████████
-████████████████████████████████████████████████████████████
-████████████████████████████████████████████████████████████
-           ┌────────────────────────────┐
-           │           [  DOOR  ]        │
-           │          (élève attend)    │
-           └────────────────────────────┘
+                                      █████████████        
+                                   ██░░░░░░░░░░░░░░██     
+                                 ██░░░░░░░░░░░░░░░░░░██   
+                               ██░░░░░░░░░░░░░░░░░░░░░░██ 
+                            ||████████████████████████████||
+                            ||█░░█░░░░█░░░░█░░░░█░░░░█░░█||
+                            ||█░░█░░░░█░░░░█░░░░█░░░░█░░█||
+                            ||█░░█████░░█████░░█████░░███||
+                            ||█░░░░░░░░░░░░░░░░░░░░░░░░░█||
+                            ||||||||||||||||||||||||||||||||
+
+ YYYYYYY       YYYYYYY                    SSSSSSSSSSSSSSS
+ Y:::::Y       Y:::::Y                  SS:::::::::::::::S
+ Y:::::Y       Y:::::Y                 S:::::SSSSSS::::::S
+ Y::::::Y     Y::::::Y                 S:::::S     SSSSSSS
+ YYY:::::Y   Y:::::YYY                 S:::::S                cccccccccccccccc  aaaaaaaaaaaaa  ppppp   ppppppppp       eeeeeeeeeeee
+    Y:::::Y Y:::::Y                    S:::::S              cc:::::::::::::::c  a::::::::::::a p::::ppp:::::::::p    ee::::::::::::ee
+     Y:::::Y:::::Y                      S::::SSSS          c:::::::::::::::::c  aaaaaaaaa:::::ap:::::::::::::::::p  e::::::eeeee:::::ee
+      Y:::::::::Y      ---------------   SS::::::SSSSS    c:::::::cccccc:::::c           a::::app::::::ppppp::::::pe::::::e     e:::::e
+       Y:::::::Y       -:::::::::::::-     SSS::::::::SS  c::::::c     ccccccc    aaaaaaa:::::a p:::::p     p:::::pe:::::::eeeee::::::e
+        Y:::::Y        ---------------        SSSSSS::::S c:::::c               aa::::::::::::a p:::::p     p:::::pe:::::::::::::::::e
+        Y:::::Y                                    S:::::Sc:::::c              a::::aaaa::::::a p:::::p     p:::::pe::::::eeeeeeeeeee
+        Y:::::Y                                    S:::::Sc::::::c     ccccccca::::a    a:::::a p:::::p    p::::::pe:::::::e
+        Y:::::Y                        SSSSSSS     S:::::Sc:::::::cccccc:::::ca::::a    a:::::a p:::::ppppp:::::::pe::::::::e
+     YYYY:::::YYYY                     S::::::SSSSSS:::::S c:::::::::::::::::ca:::::aaaa::::::a p::::::::::::::::p  e::::::::eeeeeeee
+     Y:::::::::::Y                     S:::::::::::::::SS   cc:::::::::::::::c a::::::::::aa:::ap::::::::::::::pp    ee:::::::::::::e
+     YYYYYYYYYYYYY                      SSSSSSSSSSSSSSS       cccccccccccccccc  aaaaaaaaaa  aaaap::::::pppppppp        eeeeeeeeeeeeee
+                                                                                            p:::::p
+     ||████████████████████████████|| ||████████████████████████████||                      p:::::p     ||████████████████████████████|
+       █░░█░░░░█░░░░█░░░░█░░░░█░░█||    █░░█░░░░█░░░░█░░░░█░░░░█░░█|                       p:::::::p      █░░█░░░░█░░░░█░░░░█░░░░█░░█
+       █░░█░░░░█░░░░█░░░░█░░░░█░░█||    █░░█░░░░█░░░░█░░░░█░░░░█░░█|                        p:::::p       █░░█░░░░█░░░░█░░░░█░░░░█░░█| 
+       █░░█░░░░█░░░░█░░░░█░░░░█░░█||    █░░█░░░░█░░░░█░░░░█░░░░█░░█|                       p:::::::p      █░░█░░░░█░░░░█░░░░█░░░░█░░█|
+       █░░██████░░░░███████░░░█░░█||    █░░██████░░░████░░█░░░░█░░█|                        p:::::p       █░░██████░░░████░░█░░░░█░░█|
+       █░░█░░░░█░░░░█░░░░█░░░░█░░█||    █░░█░░░░█░░░░█░░░░█░░░░█░░█||                       p:::::p       █░░█░░░░█░░░░█░░░░█░░░░█░░█|
+       █░░█░░░░█░░░░█░░░░█░░░░█░░█||    █░░█░░░░█░░░░█░░░░█░░░░█░░█|                         ppppp        █░░█░░░░█░░░░█░░░░█░░░░█░░█|
+       █░░█░░░░█░░░░█░░░░█░░░░█░░█||    █░░█░░░░█░░░░█░░░░█░░░░█░░█|                                      █░░█░░░░█░░░░█░░░░█░░░░█░░█|                                              
+       █░░██████░░░░███████░░░█░░█||    █░░██████░░░████░░█░░░░█░░█|                                      █░░██████░░░████░░█░░░░█░░█|                                                     
+       █░░█░░░░█░░░░█░░░░█░░░░█░░█||    █░░█░░░░█░░░░█░░░░█░░░░█░░█|                                      █░░█░░░░█░░░░█░░░░█░░░░█░░█|                                             
+                                                                                     
+
 `)
 	fmt.Println("\033[0m")
 }
@@ -151,7 +177,7 @@ func introduction() {
 	typewriterPrint("Il ne te reste que quelques heures pour récupérer ton Saint Diplôme à temps et sauver l'humanité.", 30*time.Millisecond, "\033[36m")
 
 	// laisser la phrase finale EXACTE comme demandé
-	typewriterPrint("Nous comptons sur toi jeune Skylanders.. Euhh éleve de Ynov !!!", 40*time.Millisecond, "\033[1;31m")
+	typewriterPrint("Nous comptons sur toi jeune hmar.. Euhh éleve de Ynov !!!", 40*time.Millisecond, "\033[1;31m")
 }
 
 // -------------------- Gestion Nom perso --------------------
@@ -294,7 +320,7 @@ func (p *Character) UseRedBull() {
 	} else {
 		p.Pv += heal
 	}
-	fmt.Printf("💖 RedBull consommé ! PV : %d/%d\n", p.Pv, p.PvMax)
+	fmt.Printf("💖 RedBull consommé, la tie bien ! PV : %d/%d\n", p.Pv, p.PvMax)
 }
 
 func (p *Character) UseCoca() {
@@ -377,27 +403,30 @@ func (p *Character) EquipFromInventory(nom string) {
 func (p *Character) MerchantMenu() {
 	for {
 		fmt.Println()
-		fmt.Print("\033[1;33m")
+		fmt.Print("\033[1;33m") // Jaune gras
 		fmt.Println("┏━━━━━━┛  Marchand du Campus  ┗━━━━━━┓")
-		fmt.Print("\033[0m")
+		fmt.Print("\033[0m") // Reset couleur
 
-		fmt.Print("\033[32m")
+		// Options en blanc
+		fmt.Print("\033[97m") // Blanc
 		fmt.Println("\t1 - RedBull (+50 PV) - 10£")
 		fmt.Println("\t2 - Coca bien frais Chakal (+10% attaque / 1 tour) - 15£")
 		fmt.Println("\t3 - Café dilué au Ciao Kambucha (Poison -10PV/s 3s) - 20£")
-		fmt.Println("\t4 - Sac à dos perdu (+5 places inventaire) - 30£")
+		fmt.Println("\t4 - Sacoche perdu (+5 places inventaire) - 30£")
 		fmt.Println("\t0 - Retour")
-		fmt.Print("\033[0m")
+		fmt.Print("\033[0m") // Reset couleur
 
+		// Infos supplémentaires
 		fmt.Printf("💰 Argent : %d£\n", p.Argent)
 		fmt.Print("Choix : ")
+
 		var choix int
 		fmt.Scan(&choix)
 
 		switch choix {
 		case 1:
 			if p.Argent < 10 {
-				fmt.Println("❌ Pas assez d'argent pour acheter RedBull.")
+				fmt.Println("❌ Ta pas d'argent pour acheter une RedBull.")
 			} else {
 				if ok := p.AddInventory("RedBull", 1); ok {
 					p.Argent -= 10
@@ -408,7 +437,7 @@ func (p *Character) MerchantMenu() {
 			}
 		case 2:
 			if p.Argent < 15 {
-				fmt.Println("❌ Pas assez d'argent pour acheter le Coca.")
+				fmt.Println("❌ Ta pas assez d'argent pour acheter le Coca.")
 			} else {
 				if ok := p.AddInventory("Coca bien frais Chakal", 1); ok {
 					p.Argent -= 15
@@ -419,7 +448,7 @@ func (p *Character) MerchantMenu() {
 			}
 		case 3:
 			if p.Argent < 20 {
-				fmt.Println("❌ Pas assez d'argent pour acheter le Café dilué.")
+				fmt.Println("❌ Ta pas assez d'argent pour acheter le Café dilué.")
 			} else {
 				if ok := p.AddInventory("Café dilué au Ciao Kambucha", 1); ok {
 					p.Argent -= 20
@@ -430,14 +459,14 @@ func (p *Character) MerchantMenu() {
 			}
 		case 4:
 			if p.Backpack {
-				fmt.Println("🎒 Tu possèdes déjà le Sac à dos perdu.")
+				fmt.Println("🎒 Tu possèdes déjà la Sacoche perdu.")
 			} else if p.Argent < 30 {
-				fmt.Println("❌ Pas assez d'argent pour acheter le Sac à dos perdu.")
+				fmt.Println("❌ Pas assez d'argent pour acheter la Sacoche perdu.")
 			} else {
 				p.Argent -= 30
 				p.Backpack = true
 				p.MaxInv = 10
-				fmt.Println("✅ Achat : Sac à dos perdu. Inventaire étendu à 10 emplacements.")
+				fmt.Println("✅ Achat : Sacoche perdu. Inventaire étendu à 10 emplacements.")
 			}
 		case 0:
 			return
@@ -449,20 +478,22 @@ func (p *Character) MerchantMenu() {
 
 func (p *Character) BlacksmithMenu() {
 	for {
-		fmt.Println()
-		fmt.Print("\033[1;36m")
+		fmt.Print("\033[1;33m") // Jaune
 		fmt.Println("┏━━━━━━┛  Forgeron  ┗━━━━━━┓")
 		fmt.Print("\033[0m")
 
-		fmt.Print("\033[32m")
+		// Options en blanc
+		fmt.Print("\033[97m") // Blanc
 		fmt.Println("\t1 - Casquette Gucci (60 pièces) [+20% attaque à partir du 3e tour]")
 		fmt.Println("\t2 - Asics Kayano (60 pièces) [empêche le monstre de jouer 1 tour]")
 		fmt.Println("\t0 - Retour")
 		fmt.Print("\033[0m")
 
-		fmt.Printf("⚠️ Pour acheter et équiper, tu dois posséder l'objet 'flow du contrôleur RATP'.\n")
+		// Infos supplémentaires
+		fmt.Printf("⚠️ Pour acheter et équiper, tu dois posséder l'objet 'Flow du contrôleur RATP'.\n")
 		fmt.Printf("💰 Pièces : %d\n", p.Pieces)
 		fmt.Print("Choix : ")
+
 		var choix int
 		fmt.Scan(&choix)
 
@@ -558,6 +589,23 @@ func (p *Character) AccessInventoryMenu() {
 
 // -------------------- Combat : Goblin (ClasseInfobugé) --------------------
 
+// Barre de vie à afficher dans le terminal
+func DisplayHPBar(current, max int, width int) string {
+	percentage := float64(current) / float64(max)
+	filled := int(percentage * float64(width))
+	empty := width - filled
+
+	bar := ""
+	for i := 0; i < filled; i++ {
+		bar += "█"
+	}
+	for i := 0; i < empty; i++ {
+		bar += "░"
+	}
+
+	return bar
+}
+
 func InitGoblin() Monster {
 	return Monster{Nom: "ClasseInfobugé", PvMax: 115, Pv: 115, Attaque: 20}
 }
@@ -571,13 +619,15 @@ func GoblinPattern(monstre *Monster, player *Character, tour int) {
 	cri := cris[rand.Intn(len(cris))]
 	fmt.Printf("\n%s crie \"%s\" !\n", monstre.Nom, cri)
 
-	// si joueur a Asics effect (empêche une action), handle in CharacterTurn when player triggers it.
 	player.Pv -= attack
 	if player.Pv < 0 {
 		player.Pv = 0
 	}
 	fmt.Printf("%s inflige à %s %d dégâts !\n", monstre.Nom, player.Nom, attack)
-	fmt.Printf("%s PV : %d/%d\n", player.Nom, player.Pv, player.PvMax)
+
+	// Affichage barre de vie joueur
+	bar := DisplayHPBar(player.Pv, player.PvMax, 20)
+	fmt.Printf("%s PV : [%s] %d/%d\n", player.Nom, bar, player.Pv, player.PvMax)
 }
 
 func CharacterTurn(monstre *Monster, player *Character, tour *int, monsterSkipped *bool) {
@@ -590,22 +640,23 @@ func CharacterTurn(monstre *Monster, player *Character, tour *int, monsterSkippe
 	fmt.Scan(&choix)
 	switch choix {
 	case 1:
-		// Attaque basique - tenir compte si casquette active => l'effet casquette s'applique via CasquetteActive field
 		damage := player.Attaque
 		fmt.Printf("%s utilise Attaque basique et inflige %d dégâts !\n", player.Nom, damage)
 		monstre.Pv -= damage
 		if monstre.Pv < 0 {
 			monstre.Pv = 0
 		}
-		fmt.Printf("%s PV : %d/%d\n", monstre.Nom, monstre.Pv, monstre.PvMax)
+
+		// Affichage barre de vie monstre
+		bar := DisplayHPBar(monstre.Pv, monstre.PvMax, 20)
+		fmt.Printf("%s PV : [%s] %d/%d\n", monstre.Nom, bar, monstre.Pv, monstre.PvMax)
+
 	case 2:
-		// Accès à l'inventaire (utilisation d'objets en combat)
 		player.AccessInventoryCombat()
 	case 3:
-		// utiliser Asics si équipé
 		if player.Equipement.Pieds == "Asics Kayano" && player.HasAsicsEffect {
 			*monsterSkipped = true
-			player.HasAsicsEffect = false // effet consommé (ou garder selon design)
+			player.HasAsicsEffect = false
 			fmt.Println("👟 Tu actives Asics Kayano : le monstre est bloqué pour 1 tour !")
 		} else {
 			fmt.Println("❌ Tu n'as pas Asics Kayano équipées ou l'effet n'est pas disponible.")
@@ -613,9 +664,7 @@ func CharacterTurn(monstre *Monster, player *Character, tour *int, monsterSkippe
 	default:
 		fmt.Println("Choix invalide, tu perds ton action.")
 	}
-	// fin du turn du joueur, on décrémente les tours boost si actifs (mais revert après le tour du monstre)
-	// CasquetteDelay est gérée dans boucle de combat
-	_ = tour
+	fmt.Println("-----------------------")
 }
 
 func (p *Character) AccessInventoryCombat() {
@@ -643,36 +692,32 @@ func (p *Character) AccessInventoryCombat() {
 		p.UseCoca()
 	case "Café dilué au Ciao Kambucha":
 		fmt.Println("☠️ Tu lances le Café dilué sur l'ennemi (poison) ! (implémentation simplifiée)")
-		// appliquer poison de test sur le monstre via un petit loop: pour simplifier, on applique direct damage here
-		// but since monstre passed by pointer in caller, we cannot access it here; in combat we handle using AccessInventoryCombat from CharacterTurn when relevant.
 	default:
 		fmt.Println("Objet non utilisable en combat.")
 	}
 }
 
-// TrainingFight : le combat d'entraînement contre la ClasseInfobugé
 func TrainingFight(player *Character) {
 	monstre := InitGoblin()
 	tour := 1
 	monsterSkipped := false
-	fmt.Println("\n⚔️ Début du combat d'entraînement contre", monstre.Nom, "!")
+	fmt.Println("\n⚔️ Début du combat contre", monstre.Nom, "!")
 	for player.Pv > 0 && monstre.Pv > 0 {
 		fmt.Printf("\n======== Tour %d ========\n", tour)
 
-		// Si casquette équipée et pas encore active, décrémente et active si nécessaire
+		// Casquette Gucci activation
 		if player.Equipement.Tete == "Casquette Gucci" && !player.CasquetteActive {
 			if player.CasquetteDelay > 0 {
 				fmt.Printf("(Casquette Gucci : %d tours avant activation)\n", player.CasquetteDelay)
 				player.CasquetteDelay--
 				if player.CasquetteDelay == 0 {
-					// activer l'effet : +20% attaque
 					bonus := int(float64(player.Attaque) * 0.20)
 					if bonus < 1 {
 						bonus = 1
 					}
 					player.Attaque += bonus
 					player.CasquetteActive = true
-					fmt.Printf("🧢 Casquette Gucci s'active ! Attaque augmentée de +%d (Attaque = %d)\n", bonus, player.Attaque)
+					fmt.Printf("🧢 Ta mis la Casquette Gucci sur le coté ! Attaque augmentée de +%d (Attaque = %d)\n", bonus, player.Attaque)
 				}
 			}
 		}
@@ -680,39 +725,37 @@ func TrainingFight(player *Character) {
 		// Tour du joueur
 		CharacterTurn(&monstre, player, &tour, &monsterSkipped)
 		if monstre.Pv <= 0 {
+			fmt.Println("-----------------------")
 			break
 		}
 
-		// Tour du monstre (sauf si joueur a appliqué Asics -> monsterSkipped true)
+		// Tour du monstre
 		if monsterSkipped {
-			fmt.Println("\nLe monstre est bloqué ce tour, il ne peut pas attaquer.")
+			fmt.Println("\nLe Monstre est bloqué ce tour, il ne peut pas attaquer.")
 			monsterSkipped = false
 		} else {
 			GoblinPattern(&monstre, player, tour)
 		}
 
-		// Après l'attaque du monstre, gérer la durée du boost Coca
+		// Fin de l'effet Coca
 		if player.TempBoostTurns > 0 {
 			player.TempBoostTurns--
 			if player.TempBoostTurns == 0 {
-				// revert boost
 				player.Attaque -= player.TempAttackBoost
-				fmt.Printf("🥤 Effet Coca terminé. Attaque revenue à %d\n", player.Attaque)
+				fmt.Printf("🥤 Ta finis ta canette de coca. Attaque revenue à %d\n", player.Attaque)
 				player.TempAttackBoost = 0
 			}
 		}
 
-		// vérifier si joueur mort
 		if player.Pv <= 0 {
 			break
 		}
 		tour++
 	}
 
-	// Résultat du combat
+	// Fin du combat
 	if player.Pv <= 0 {
-		fmt.Println("\n❌ Tu es vaincu... Retour au menu principal.")
-		// optionnel : restaurer PV partiellement ou renvoyer au menu
+		fmt.Println("\n❌ Tes vaincu, tu flop trop... Retour au menu principal.")
 	} else {
 		fmt.Println("\n🎉 Yesss mon gaté c'est gagné ! EZ la classe")
 		player.Pieces += 15
@@ -720,7 +763,6 @@ func TrainingFight(player *Character) {
 		if added {
 			fmt.Println("Récompense : +15 pièces et 1x Bouteille de Kambucha alcoolisé à 2% ajouté à l'inventaire (soigne 30PV).")
 		} else {
-			// si inventaire plein, on donne argent à la place
 			player.Argent += 0
 			fmt.Println("Ton inventaire était plein : la récompense 'Bouteille de Kambucha' n'a pas pu être ajoutée.")
 			fmt.Println("Tu as quand même reçu +15 pièces.")
@@ -781,19 +823,23 @@ func (p *Character) StartMenu() {
 		yellowBold = "\033[1;33m"
 		green      = "\033[32m"
 		reset      = "\033[0m"
+		white      = "\033[97m"
+		purpleBold = "\033[1;35m"
 	)
 	for {
 		fmt.Println()
-		fmt.Print(yellowBold)
-		fmt.Println("▁ ▂ ▄ ▅ ▆ ▇ █  Menu Principal  █ ▇ ▆ ▅ ▄ ▂ ▁")
+		fmt.Print(purpleBold)
+		fmt.Println("╔══════════════════════════════════╗")
+		fmt.Println("║         Menu Principal           ║")
+		fmt.Println("╚══════════════════════════════════╝")
 		fmt.Print(reset)
 
-		fmt.Print(green)
+		fmt.Print(white)
 		fmt.Println("\t1 - Afficher infos personnage")
 		fmt.Println("\t2 - Inventaire")
 		fmt.Println("\t3 - Marchand du Campus")
 		fmt.Println("\t4 - Forgeron")
-		fmt.Println("\t5 - Combat d'entraînement (ClasseInfobugé)")
+		fmt.Println("\t5 - Combat (ClasseInfobugé)")
 		fmt.Println("\t0 - Quitter")
 		fmt.Print(reset)
 
@@ -823,7 +869,6 @@ func (p *Character) StartMenu() {
 }
 
 // -------------------- Main --------------------
-
 func main() {
 	rand.Seed(time.Now().UnixNano())
 	introduction()
