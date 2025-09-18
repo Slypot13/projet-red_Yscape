@@ -174,3 +174,129 @@ func TrainingFight(player *Character) {
 		}
 	}
 }
+
+// =========================
+// Boss 2 : Contrôleur RATP
+// =========================
+
+// InitControleurRATP : initialise le boss
+func InitControleurRATP() Monster {
+	return Monster{Nom: "Contrôleur RATP", PvMax: 150, Pv: 150, Attaque: 30}
+}
+
+// ControleurRATPPattern : attaques spéciales
+func ControleurRATPPattern(monstre *Monster, player *Character, tour int) {
+	attack := monstre.Attaque
+	if tour%2 == 0 {
+		attack = int(float64(monstre.Attaque) * 1.3)
+		fmt.Printf("\n🚆 %s lance un train entier sur toi !\n", monstre.Nom)
+	} else {
+		fmt.Printf("\n🚇 %s te demande ton ticket... mais c’est un coup de matraque !\n", monstre.Nom)
+	}
+	player.Pv -= attack
+	if player.Pv < 0 {
+		player.Pv = 0
+	}
+	fmt.Printf("%s inflige à %s %d dégâts !\n", monstre.Nom, player.Nom, attack)
+	fmt.Printf("%s PV : %d/%d\n", player.Nom, player.Pv, player.PvMax)
+}
+
+// Boss2PreFight : choix des portes
+func Boss2PreFight(player *Character) {
+	fmt.Println("\n🚪 Trois portes devant toi :")
+	fmt.Println("1 - Salle 201")
+	fmt.Println("2 - Salle 202")
+	fmt.Println("3 - Salle 203")
+	fmt.Print("Choisis une porte : ")
+
+	var choix int
+	fmt.Scan(&choix)
+
+	switch choix {
+	case 1:
+		fmt.Println("\n👷 Tu rencontres une Archi rebelle ! Elle t’accompagnera et infligera +10 dégâts par attaque au Contrôleur RATP.")
+		player.TempAttackBoost += 10
+	case 2:
+		fmt.Println("\n🥤 Une simple bouteille d’eau vide... La salle est déserte.")
+	case 3:
+		fmt.Println("\n📜 Tu trouves un Passe Navigo de 2013 ! Ajouté à ton inventaire.")
+		player.AddInventory("Passe Navigo 2013", 1)
+	default:
+		fmt.Println("❌ Mauvais choix, tu retournes à l’entrée (aucun bonus).")
+	}
+}
+
+// Boss2Fight : combat contre le Contrôleur RATP
+func Boss2Fight(player *Character) {
+	// Passage obligé par les portes
+	Boss2PreFight(player)
+
+	monstre := InitControleurRATP()
+	tour := 1
+	monsterSkipped := false
+	fmt.Println("\n⚔️ Le Contrôleur RATP apparaît avec son gilet fluorescent !")
+
+	for player.Pv > 0 && monstre.Pv > 0 {
+		fmt.Printf("\n======== Tour %d ========\n", tour)
+
+		// Effets casquette Gucci (copié de TrainingFight)
+		if player.Equipement.Tete == "Casquette Gucci" && !player.CasquetteActive {
+			if player.CasquetteDelay > 0 {
+				fmt.Printf("(Casquette Gucci : %d tours avant activation)\n", player.CasquetteDelay)
+				player.CasquetteDelay--
+				if player.CasquetteDelay == 0 {
+					bonus := int(float64(player.Attaque) * 0.20)
+					if bonus < 1 {
+						bonus = 1
+					}
+					player.Attaque += bonus
+					player.CasquetteActive = true
+					fmt.Printf("🧢 Casquette Gucci s'active ! Attaque augmentée de +%d (Attaque = %d)\n", bonus, player.Attaque)
+				}
+			}
+		}
+
+		// Tour du joueur
+		CharacterTurn(&monstre, player, &tour, &monsterSkipped)
+		if monstre.Pv <= 0 {
+			break
+		}
+
+		// Tour du boss
+		if monsterSkipped {
+			fmt.Println("\n🚷 Le Contrôleur est bloqué ce tour (merci Asics) !")
+			monsterSkipped = false
+		} else {
+			ControleurRATPPattern(&monstre, player, tour)
+		}
+
+		// Gestion boost Coca
+		if player.TempBoostTurns > 0 {
+			player.TempBoostTurns--
+			if player.TempBoostTurns == 0 {
+				player.Attaque -= player.TempAttackBoost
+				fmt.Printf("🥤 Effet Coca terminé. Attaque revenue à %d\n", player.Attaque)
+				player.TempAttackBoost = 0
+			}
+		}
+
+		if player.Pv <= 0 {
+			break
+		}
+		tour++
+	}
+
+	// Fin du combat
+	if player.Pv <= 0 {
+		fmt.Println("\n❌ Le Contrôleur RATP t’a recalé sans ticket... Retour au menu principal.")
+	} else {
+		fmt.Println("\n🎉 Victoire ! Tu as vaincu le Contrôleur RATP.")
+		player.Pieces += 30
+		added := player.AddInventory("Flow du Contrôleur RATP", 1)
+		if added {
+			fmt.Println("Récompenses : +1000 Aura, +30 pièces et 1x Flow du Contrôleur RATP ajouté à ton inventaire (utilisable chez le forgeron).")
+		} else {
+			fmt.Println("Ton inventaire est plein, tu reçois quand même +1000 Aura et +30 pièces.")
+		}
+	}
+}
