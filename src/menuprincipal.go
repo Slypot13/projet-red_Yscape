@@ -25,7 +25,7 @@ func (p *Character) StartMenu() {
 		fmt.Println("\t2 - Inventaire")
 		fmt.Println("\t3 - Marchand du Campus")
 		fmt.Println("\t4 - Forgeron")
-		fmt.Println("\t5 - Combat (ClasseInfobugé)")
+		fmt.Println("\t5 - Combat pour le diplome")
 		fmt.Println("\t0 - Quitter")
 		fmt.Print(reset)
 
