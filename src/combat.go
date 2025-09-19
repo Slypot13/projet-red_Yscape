@@ -65,7 +65,7 @@ func TrainingFight(p *Character) {
 			if bossProgression[0] {
 				fmt.Println("✅ Boss déjà vaincu.")
 			} else {
-				startCombat(p, Monster{"Classe Infobugé", 100, 100, 10}, 0, 50)
+				startCombat(p, Monster{"Classe Infobugé", 120, 120, 10}, 0, 50)
 			}
 		case 2:
 			if !bossProgression[0] {
@@ -73,7 +73,7 @@ func TrainingFight(p *Character) {
 			} else if bossProgression[1] {
 				fmt.Println("✅ Boss déjà vaincu.")
 			} else {
-				startCombat(p, Monster{"Le Contrôleur RATP", 150, 150, 20}, 1, 100)
+				startCombat(p, Monster{"Le Contrôleur RATP", 200, 200, 20}, 1, 100)
 			}
 		case 3:
 			if !bossProgression[1] {
@@ -81,7 +81,7 @@ func TrainingFight(p *Character) {
 			} else if bossProgression[2] {
 				fmt.Println("✅ Boss déjà vaincu.")
 			} else {
-				startCombat(p, Monster{"Les deux frères Khabil", 200, 200, 30}, 2, 150)
+				startCombat(p, Monster{"Les deux frères Khabil", 350, 350, 30}, 2, 150)
 			}
 		case 4:
 			if !bossProgression[2] {
@@ -89,7 +89,7 @@ func TrainingFight(p *Character) {
 			} else if bossProgression[3] {
 				fmt.Println("✅ Boss déjà vaincu.")
 			} else {
-				startCombat(p, Monster{"Lucas et les Archi", 250, 250, 40}, 3, 200)
+				startCombat(p, Monster{"Lucas et les Archi", 500, 500, 40}, 3, 200)
 			}
 		case 5:
 			if !bossProgression[3] {
@@ -97,7 +97,7 @@ func TrainingFight(p *Character) {
 			} else if bossProgression[4] {
 				fmt.Println("✅ Boss déjà vaincu.")
 			} else {
-				startCombat(p, Monster{"Marocain Start-Up", 300, 300, 50}, 4, 300)
+				startCombat(p, Monster{"Marocain Start-Up", 700, 700, 50}, 4, 300)
 			}
 		case 0:
 			return
@@ -105,6 +105,21 @@ func TrainingFight(p *Character) {
 			fmt.Println("❌ Choix invalide.")
 		}
 	}
+}
+
+// Fonction qui affiche une barre de vie esthétique
+func afficherBarreDeVie(nom string, pv, pvMax int) {
+	barre := "["
+	percent := (pv * 100) / pvMax
+	for i := 0; i < 20; i++ {
+		if i < (percent / 5) {
+			barre += "█"
+		} else {
+			barre += " "
+		}
+	}
+	barre += "]"
+	fmt.Printf("%s %s %d/%d %s\n", nom, barre, pv, pvMax, fmt.Sprintf("(%d%%)", percent))
 }
 
 // Fonction qui lance le combat avec un boss
@@ -120,6 +135,10 @@ func startCombat(p *Character, m Monster, bossIndex int, reward int) {
 
 	// Début du combat
 	for p.Pv > 0 && m.Pv > 0 {
+		// Affichage de la barre de vie esthétique pour le joueur et le monstre
+		afficherBarreDeVie(p.Nom, p.Pv, p.PvMax)
+		afficherBarreDeVie(m.Nom, m.Pv, m.PvMax)
+
 		// Si on combat les frères Khabil, il y a une chance sur 4 de déclencher la flûte de Gasba
 		if m.Nom == "Les deux frères Khabil" && rand.Intn(4) == 1 {
 			fmt.Println("🎶 Flûte de Gasba activée ! Tu es endormi pendant un tour...")
@@ -172,7 +191,6 @@ func startCombat(p *Character, m Monster, bossIndex int, reward int) {
 			if m.Pv < 0 {
 				m.Pv = 0
 			}
-
 		case 2:
 			p.AccessInventoryMenu()
 			continue
@@ -219,9 +237,9 @@ func startCombat(p *Character, m Monster, bossIndex int, reward int) {
 
 		// Récompense spéciale pour boss 2
 		if m.Nom == "Le Contrôleur RATP" {
-			if !p.HasItem("Contrôleur RATP") {
-				p.AddItem("Contrôleur RATP")
-				fmt.Println("🎁 Tu as obtenu le Contrôleur RATP !")
+			if !p.HasItem("Flow du Contrôleur RATP") {
+				p.AddItem("Flow du Contrôleur RATP")
+				fmt.Println("🎁 Tu as obtenu le Flow du Contrôleur RATP !")
 			}
 		}
 	}
