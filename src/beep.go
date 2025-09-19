@@ -34,3 +34,28 @@ func playSong() {
 
 	<-done
 }
+
+func playSong2() {
+	f, err := os.Open("C:/Users/ayrto/OneDrive/Bureau/projet red,/BRUITAGE  VICTOIRE.mp3")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	streamer, format, err := mp3.Decode(f)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer streamer.Close()
+
+	sr := format.SampleRate * 2
+	speaker.Init(sr, sr.N(time.Second/10))
+
+	resampled := beep.Resample(4, format.SampleRate, sr, streamer)
+
+	done := make(chan bool)
+	speaker.Play(beep.Seq(resampled, beep.Callback(func() {
+		done <- true
+	})))
+
+	<-done
+}

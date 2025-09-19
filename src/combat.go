@@ -79,7 +79,7 @@ func TrainingFight(p *Character) {
 			} else if bossProgression[2] {
 				fmt.Println("✅ Boss déjà vaincu.")
 			} else {
-				startCombat(p, Monster{"Les deux frères Kabyle", 300, 300, 30}, 2, 150, "🌌 Tu gagnes +3000 d'Aura !")
+				startCombat(p, Monster{"Les deux frères Kabyle", 350, 350, 30}, 2, 150, "🌌 Tu gagnes +3000 d'Aura !")
 			}
 		case 4:
 			if !bossProgression[2] {
@@ -87,7 +87,7 @@ func TrainingFight(p *Character) {
 			} else if bossProgression[3] {
 				fmt.Println("✅ Boss déjà vaincu.")
 			} else {
-				startCombat(p, Monster{"Lucas et les Archi", 500, 500, 40}, 3, 200, "🌌 Tu gagnes +4000 d'Aura !")
+				startCombat(p, Monster{"Lucas et les Archi", 550, 550, 40}, 3, 200, "🌌 Tu gagnes +4000 d'Aura !")
 			}
 		case 5:
 			if !bossProgression[3] {
@@ -95,7 +95,8 @@ func TrainingFight(p *Character) {
 			} else if bossProgression[4] {
 				fmt.Println("✅ Boss déjà vaincu.")
 			} else {
-				startCombat(p, Monster{"Marocain Start-Up", 750, 750, 50}, 4, 300, "🌌 Tu gagnes +9999999 d'Aura !Adib te remercie de l'avoir libéré, et fait une danse Fortnite avec toi, puis s'en va sans rien te dire")
+				go playSong2()
+				startCombat(p, Monster{"Marocain Start-Up", 1000, 1000, 50}, 4, 300, "🌌 Tu gagnes +9999999 d'Aura !Adib te remercie de l'avoir libéré, et fait une danse Fortnite avec toi, puis s'en va sans rien te dire")
 			}
 		case 0:
 			return
