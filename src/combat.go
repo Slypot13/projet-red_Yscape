@@ -5,7 +5,7 @@ import (
 	"math/rand"
 )
 
-// -------------------- Combat : Goblin (ClasseInfobugé) --------------------
+// -------------------- Combat : (ClasseInfobugé) --------------------
 
 func InitGoblin() Monster {
 	return Monster{Nom: "ClasseInfobugé", PvMax: 115, Pv: 115, Attaque: 20}
